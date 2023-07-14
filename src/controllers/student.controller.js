@@ -110,11 +110,11 @@ async function deleteStudentController(req, res) {
 
   if (error) {
     response.error = `Error deleting student: ${error}`;
-    res.status(500).send(response);
+    return res.status(500).send(response);
   }
 
   response.data = data;
-  res.status(200).send(response);
+  return res.status(200).send(response);
 }
 
 export {

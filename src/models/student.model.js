@@ -28,7 +28,12 @@ async function getStudent(idNumber) {
   try {
     const query = 'SELECT * FROM student where idNumber = ?;';
     const [rows] = await promisePool.execute(query, [idNumber]);
-    console.log(rows);
+
+    if (rows?.length === 0) {
+      result.error = 'student not found';
+      return result;
+    }
+
     result.data = rows;
   } catch (error) {
     console.log(error);
@@ -75,6 +80,11 @@ async function updateStudent({ currentIdNumber, updatedData }) {
       currentIdNumber,
     ]);
 
+    if (data?.affectedRows === 0) {
+      result.error = 'student not found';
+      return result;
+    }
+
     result.data = data;
   } catch (error) {
     console.log(error);
@@ -92,6 +102,12 @@ async function deleteStudent(idNumber) {
   try {
     const query = 'DELETE FROM student WHERE idNumber=?;';
     const [data] = await promisePool.execute(query, [idNumber]);
+
+    if (data?.affectedRows === 0) {
+      result.error = 'student not found';
+      return result;
+    }
+
     result.data = data;
   } catch (error) {
     result.error = error.code;
