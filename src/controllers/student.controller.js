@@ -21,10 +21,10 @@ async function createStudentController(req, res) {
     return res.status(400).send({ response });
   }
 
-  const { error, data } = await createStudent(student);
+  const data = await createStudent(student);
 
-  if (error) {
-    response.error = `Error creating student: ${error}`;
+  if (!data) {
+    response.error = 'Error creating student';
     return res.status(500).send({ response });
   }
 
@@ -41,10 +41,10 @@ async function getStudentController(req, res) {
 
   const { idNumber } = req.params;
 
-  const { error, data } = await getStudent(idNumber);
+  const data = await getStudent(idNumber);
 
-  if (error) {
-    response.error = `Error getting student: ${error}`;
+  if (!data) {
+    response.error = 'Error getting student';
     return res.status(500).send(response);
   }
 
@@ -59,10 +59,10 @@ async function getAllStudentsController(req, res) {
     error: null,
   };
 
-  const { error, data } = await getAllStudents();
+  const data = await getAllStudents();
 
-  if (error) {
-    response.error = error;
+  if (!data) {
+    response.error = 'Error getting students';
     return res.status(500).send(response);
   }
 
@@ -86,10 +86,10 @@ async function updateStudentController(req, res) {
     return res.status(400).send(response);
   }
 
-  const { error, data } = await updateStudent({ currentIdNumber, updatedData });
+  const data = await updateStudent({ currentIdNumber, updatedData });
 
-  if (error) {
-    response.error = `Error updating student: ${error}`;
+  if (!data) {
+    response.error = 'Error updating student';
     return res.status(500).send(response);
   }
 
@@ -106,10 +106,10 @@ async function deleteStudentController(req, res) {
 
   const { idNumber } = req.params;
 
-  const { error, data } = await deleteStudent(idNumber);
+  const data = await deleteStudent(idNumber);
 
-  if (error) {
-    response.error = `Error deleting student: ${error}`;
+  if (!data) {
+    response.error = 'Error deleting student';
     return res.status(500).send(response);
   }
 
